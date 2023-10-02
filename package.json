@@ -1,0 +1,31 @@
+{
+  "name": "express-mesto-gha",
+  "version": "1.0.0",
+  "description": "13 pr",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "npx eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davedeneev/express-mesto-gha.git"
+  },
+  "author": "Dmitry Vedeneev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davedeneev/express-mesto-gha/issues"
+  },
+  "homepage": "https://github.com/davedeneev/express-mesto-gha#readme",
+  "devDependencies": {
+    "eslint": "^8.50.0"
+  },
+  "dependencies": {
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.28.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.5.3",
+    "nodemon": "^3.0.1"
+  }
+}
