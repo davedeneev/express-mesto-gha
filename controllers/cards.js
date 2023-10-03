@@ -2,7 +2,7 @@ const Card = require('../models/card');
 const {
   SUCCESS_CODE,
   CREATED_CODE,
-  ERROR_CODE,
+  BAD_REQUEST_CODE,
   NOT_FOUND_CODE,
   DEFAULT_ERROR_CODE,
 } = require('../utils/errors');
@@ -20,7 +20,7 @@ module.exports.addCard = (req, res) => {
     .then((card) => res.status(CREATED_CODE).send({ data: card }))
     .catch((err) => {
       if (err.name === 'ValidationError') {
-        res.status(ERROR_CODE).send({ message: err.message });
+        res.status(BAD_REQUEST_CODE).send({ message: err.message });
       } else {
         res.status(DEFAULT_ERROR_CODE).send({ message: 'Произошла ошибка' });
       }
@@ -37,7 +37,7 @@ module.exports.deleteCard = (req, res) => {
       if (err.message === 'NotFoundError') {
         res.status(NOT_FOUND_CODE).send({ message: 'Запрашиваемая карточка не найдена' });
       } else if (err.name === 'CastError') {
-        res.status(ERROR_CODE).send({ message: 'Некорректный Id' });
+        res.status(BAD_REQUEST_CODE).send({ message: 'Некорректный Id' });
       } else {
         res.status(DEFAULT_ERROR_CODE).send({ message: 'Произошла ошибка' });
       }
@@ -59,7 +59,7 @@ module.exports.likeCard = (req, res) => {
       if (err.message === 'NotFoundError') {
         res.status(NOT_FOUND_CODE).send({ message: 'Запрашиваемая карточка не найдена' });
       } else if (err.name === 'CastError') {
-        res.status(ERROR_CODE).send({ message: 'Некорректный Id' });
+        res.status(BAD_REQUEST_CODE).send({ message: 'Некорректный Id' });
       } else {
         res.status(DEFAULT_ERROR_CODE).send({ message: 'Произошла ошибка' });
       }
@@ -81,7 +81,7 @@ module.exports.dislikeCard = (req, res) => {
       if (err.message === 'NotFoundError') {
         res.status(NOT_FOUND_CODE).send({ message: 'Запрашиваемая карточка не найдена' });
       } else if (err.name === 'CastError') {
-        res.status(ERROR_CODE).send({ message: 'Некорректный Id' });
+        res.status(BAD_REQUEST_CODE).send({ message: 'Некорректный Id' });
       } else {
         res.status(DEFAULT_ERROR_CODE).send({ message: 'Произошла ошибка' });
       }
