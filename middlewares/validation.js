@@ -45,3 +45,9 @@ module.exports.validateAddCard = celebrate({
     link: Joi.string().required().regex(validationURL),
   }),
 });
+
+module.exports.validateModifyCard = celebrate({
+  params: Joi.object().keys({
+    cardId: Joi.string().required().regex(validationID),
+  }),
+});
