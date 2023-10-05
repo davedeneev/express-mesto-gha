@@ -1,8 +1,8 @@
 {
   "name": "express-mesto-gha",
   "version": "1.0.0",
-  "description": "13 pr",
-  "main": "index.js",
+  "description": "13-14 pr",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js",

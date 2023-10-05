@@ -35,7 +35,7 @@ module.exports.deleteCard = (req, res, next) => {
       if (!card.owner.equals(req.user._id)) {
         return next(new ForbiddenError('Отсутствуют права на удаление карточки'));
       }
-      return Card.findByIdAndDelete(req.params.cardId);
+      return Card.deleteOne(card);
     })
     .then((card) => {
       res.status(SUCCESS_CODE).send(card);
@@ -55,19 +55,16 @@ module.exports.likeCard = (req, res, next) => {
     { new: true },
   )
     .populate(['owner', 'likes'])
-    .orFail(() => {
-      throw new NotFoundError('Запрашиваемая карточка не найдена');
-    })
+    .orFail(() => new NotFoundError('Запрашиваемая карточка не найдена'))
     .then((card) => {
       res.status(SUCCESS_CODE).send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError('Некорректный ID');
+        return next(new BadRequestError('Некорректный ID'));
       }
-      next(err);
-    })
-    .catch(next);
+      return next(err);
+    });
 };
 
 module.exports.dislikeCard = (req, res, next) => {
@@ -77,17 +74,14 @@ module.exports.dislikeCard = (req, res, next) => {
     { new: true },
   )
     .populate(['owner', 'likes'])
-    .orFail(() => {
-      throw new NotFoundError('Запрашиваемая карточка не найдена');
-    })
+    .orFail(() => new NotFoundError('Запрашиваемая карточка не найдена'))
     .then((card) => {
       res.status(SUCCESS_CODE).send(card);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError('Некорректный ID');
+        return next(new BadRequestError('Некорректный ID'));
       }
-      next(err);
-    })
-    .catch(next);
+      return next(err);
+    });
 };

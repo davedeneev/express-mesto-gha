@@ -18,26 +18,20 @@ module.exports.getUsers = (req, res, next) => {
 
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.userId)
-    .orFail(() => {
-      throw new NotFoundError('Запрашиваемый пользователь не найден');
-    })
+    .orFail(() => new NotFoundError('Запрашиваемый пользователь не найден'))
     .then((user) => {
       res.status(SUCCESS_CODE).send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        throw new BadRequestError('Некорректный ID пользователя');
+        return next(new BadRequestError('Некорректный ID пользователя'));
       }
-      next(err);
-    })
-    .catch(next);
+      return next(err);
+    });
 };
 
 module.exports.getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
-    .orFail(() => {
-      throw new NotFoundError('Пользователь не найден');
-    })
     .then((user) => {
       res.status(SUCCESS_CODE).send(user);
     })
@@ -83,7 +77,7 @@ module.exports.editUserProfile = (req, res, next) => {
   )
     .then((user) => {
       if (req.user._id === undefined) {
-        throw new NotFoundError('Запрашиваемый пользователь не найден');
+        return next(new NotFoundError('Запрашиваемый пользователь не найден'));
       }
       return res.send(user);
     })
@@ -103,7 +97,7 @@ module.exports.editUserAvatar = (req, res, next) => {
   )
     .then((user) => {
       if (req.user._id === undefined) {
-        throw new NotFoundError('Запрашиваемый пользователь не найден');
+        return next(new NotFoundError('Запрашиваемый пользователь не найден'));
       }
       return res.send(user);
     })
